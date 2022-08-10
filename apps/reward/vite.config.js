@@ -12,7 +12,7 @@ export default defineConfig({
     port: 3001,
   },
   build: {
-    minify: false,
+    minify: true,
     manifest: true,
     rollupOptions: {
       input: "./src/index.ts",
