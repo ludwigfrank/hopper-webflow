@@ -1,0 +1,23 @@
+{
+  "name": "deal-page",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "dev": "vite",
+    "lint": "tsc --noEmit && TIMING=1 eslint src/**/*.ts* --fix",
+    "start": "node -r esbuild-register ./src/index.ts"
+  },
+  "dependencies": {
+    "ui": "*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.38",
+    "esbuild-register": "^3.3.2",
+    "eslint": "^7.32.0",
+    "tsconfig": "*",
+    "typescript": "^4.5.3",
+    "vite": "^3.0.5"
+  }
+}
