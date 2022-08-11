@@ -1,9 +1,2 @@
-export * from './util';
-
-export function hello() {
-  console.log('hello');
-}
-
-export function testing() {
-  console.log('testing');
-}
+export * from './util/index'
+export * from './components/index'
