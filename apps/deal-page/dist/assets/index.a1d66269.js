@@ -1,20 +1,3 @@
-// src/util/param.ts
-function getUrlParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
-}
-function bindQueryPramTexts() {
-  const attribute = "data-bind-query-param";
-  const textElements = document.querySelectorAll(`[${attribute}]`);
-  textElements.forEach((el) => {
-    const text = getUrlParam(el.getAttribute(attribute));
-    if (!text)
-      throw Error(`Url query parameter for "${attribute}" is not set.`);
-    el.innerHTML = text;
-  });
-}
-
-// src/util/time.ts
 var msIn = {
   hour: 36e5,
   day: 36e5 * 24
@@ -37,36 +20,34 @@ function getTimeStamp(date) {
   }
   return date;
 }
-
-// src/util/timer.ts
 var msHour = 36e5;
 var Timer = class {
   constructor(_end, _start, callback) {
     this._end = _end;
     this._start = _start;
     this.callback = callback;
-    this.onUpdate = (callback) => {
+    this.onUpdate = (callback2) => {
       let text;
       let props = {
         status: this.status,
         remaining: this.remaining
       };
-      if (this.status === "passed" /* Passed */ || this.remaining === null) {
+      if (this.status === "passed" || this.remaining === null) {
         text = "Oh you missed it";
-        callback({ text, ...props });
+        callback2({ text, ...props });
         return;
       } else {
         const isLongerThanADay = msHour * 24 < this.remaining;
-        if (this.status === "running" /* Running */ && this.remaining) {
+        if (this.status === "running" && this.remaining) {
           text = msToString(this.remaining) + " left";
-          callback({ text, ...props });
-        } else if (this.status === "upcoming" /* Upcoming */ && this.remaining) {
+          callback2({ text, ...props });
+        } else if (this.status === "upcoming" && this.remaining) {
           text = "In " + msToString(this.remaining);
-          callback({ text, ...props });
+          callback2({ text, ...props });
         }
         setTimeout(
           () => {
-            this.onUpdate(callback);
+            this.onUpdate(callback2);
           },
           isLongerThanADay ? this.remaining % 36e5 : 1e3
         );
@@ -80,34 +61,23 @@ var Timer = class {
   }
   get status() {
     if (Date.now() > this._end)
-      return "passed" /* Passed */;
+      return "passed";
     if (this._start && Date.now() > this._start)
-      return "running" /* Running */;
+      return "running";
     if (this._start && Date.now() < this._start)
-      return "upcoming" /* Upcoming */;
-    return "running" /* Running */;
+      return "upcoming";
+    return "running";
   }
   get remaining() {
-    if (this.status === "upcoming" /* Upcoming */ && this._start) {
+    if (this.status === "upcoming" && this._start) {
       return this._start - Date.now();
     }
-    if (this.status === "passed" /* Passed */) {
+    if (this.status === "passed") {
       return null;
     }
     return this._end - Date.now();
   }
 };
-
-// src/util/document.ts
-function onDocumentReady(fn) {
-  if (document.readyState != "loading") {
-    fn();
-  } else {
-    document.addEventListener("DOMContentLoaded", fn);
-  }
-}
-
-// src/components/countdown.ts
 var _Countdown = class {
   constructor(ref, opts) {
     this.opts = opts;
@@ -133,15 +103,15 @@ var _Countdown = class {
       this.$styled.forEach((styledElement) => {
         styledElement.classList.toggle(
           "is--running",
-          this.timer.status === "running" /* Running */
+          this.timer.status === "running"
         );
         styledElement.classList.toggle(
           "is--passed",
-          this.timer.status === "passed" /* Passed */
+          this.timer.status === "passed"
         );
         styledElement.classList.toggle(
           "is--upcoming",
-          this.timer.status === "upcoming" /* Upcoming */
+          this.timer.status === "upcoming"
         );
       });
     });
@@ -152,12 +122,7 @@ Countdown.elementId = "countdown";
 Countdown.elementList = document.querySelectorAll(
   `[data-element=${_Countdown.elementId}]`
 );
-export {
-  Countdown,
-  Timer,
-  bindQueryPramTexts,
-  getTimeStamp,
-  getUrlParam,
-  msToString,
-  onDocumentReady
-};
+new Countdown(
+  document.querySelector('[data-component="countdown"]'),
+  { end: Date.now() + 1e4 }
+);

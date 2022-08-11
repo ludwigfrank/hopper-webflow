@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 
 // vite.config.js
 export default defineConfig({
@@ -17,11 +17,8 @@ export default defineConfig({
     rollupOptions: {
       input: './src/index.ts',
       output: {
-        format: 'umd',
-        entryFileNames: 'dist/index.js',
-        esModule: false,
-        compact: true,
+        format: 'esm',
       },
     },
   },
-});
+})

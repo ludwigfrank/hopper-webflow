@@ -146,7 +146,7 @@ var _Countdown = class {
     this.$ref = ref;
     this.$text = this.$ref.querySelector('[data-bind-text="countdown"]');
     this.$styled = this.$ref.querySelectorAll("[data-styled-countdown]");
-    onDocumentReady(this.update);
+    this.update();
   }
   initializeTimer(props) {
     if (props.start && props.end) {
@@ -163,15 +163,15 @@ var _Countdown = class {
       this.$text.innerText = text;
       this.$styled.forEach((styledElement) => {
         styledElement.classList.toggle(
-          "countdown--running",
+          "is--running",
           this.timer.status === "running" /* Running */
         );
         styledElement.classList.toggle(
-          "countdown--passed",
+          "is--passed",
           this.timer.status === "passed" /* Passed */
         );
         styledElement.classList.toggle(
-          "countdown--upcoming",
+          "is--upcoming",
           this.timer.status === "upcoming" /* Upcoming */
         );
       });

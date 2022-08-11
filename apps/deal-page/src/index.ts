@@ -1,5 +1,6 @@
-import { log } from 'logger'
+import { Countdown } from 'ui'
 
-import hero from './modules/hero'
-
-hero()
+const countdown = new Countdown(
+  document.querySelector('[data-component="countdown"]') as HTMLElement,
+  { end: Date.now() + 10000 }
+)
