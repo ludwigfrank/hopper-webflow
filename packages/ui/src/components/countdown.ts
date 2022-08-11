@@ -24,10 +24,10 @@ export class Countdown {
 
     this.$ref = ref
     this.$text = this.$ref.querySelector('[data-bind-text="countdown"]')
-    this.$styled = this.$ref.querySelectorAll('[data-styled-status]')
+    this.$styled = this.$ref.querySelectorAll('[data-styled-countdown]')
 
     // Initialize the timer
-    onDocumentReady(this.update())
+    onDocumentReady(this.update)
   }
 
   initializeTimer(props: CountdownOpts) {
@@ -48,15 +48,15 @@ export class Countdown {
       this.$text.innerText = text
       this.$styled.forEach((styledElement) => {
         styledElement.classList.toggle(
-          'status--running',
+          'countdown--running',
           this.timer.status === SequenceStatus.Running
         )
         styledElement.classList.toggle(
-          'status--passed',
+          'countdown--passed',
           this.timer.status === SequenceStatus.Passed
         )
         styledElement.classList.toggle(
-          'status--upcoming',
+          'countdown--upcoming',
           this.timer.status === SequenceStatus.Upcoming
         )
       })

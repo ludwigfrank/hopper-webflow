@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": ["ES2015", "DOM"],
     "module": "CommonJS",
+    "isolatedModules": false,
     "outDir": "./dist",
     "rootDir": "./src"
   },

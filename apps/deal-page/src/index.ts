@@ -1,6 +1,5 @@
-import { log } from 'logger';
-import { hello, testing } from 'ui';
+import { log } from 'logger'
 
-import hero from './modules/hero';
+import hero from './modules/hero'
 
-hero();
+hero()

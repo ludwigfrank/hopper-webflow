@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["dom", "ES2015"],
-    "module": "CommonJS"
+    "module": "AMD",
+    "isolatedModules": false
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
